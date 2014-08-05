@@ -13,12 +13,14 @@
             require: '?ngModel',
             link: function ($scope, $element, $attributes, ngModel) {
                 if (ngModel === null) return;
-
+                $element.css('position', 'relative');
                 var options = {};
                 options.format = $attributes.format || 'YYYY-MM-DD';
+                options.showDropdowns = $attributes.showDropdowns || false;
+                options.parentEl = $element[0].tagName + '[ng-model="' + $attributes.ngModel + '"]';
                 options.separator = $attributes.separator || ' - ';
-                options.minDate = $attributes.minDate && moment($attributes.minDate);
-                options.maxDate = $attributes.maxDate && moment($attributes.maxDate);
+                options.minDate = $attributes.minDate && moment(new Date($attributes.minDate));
+                options.maxDate = $attributes.maxDate && moment(new Date($attributes.maxDate));
                 options.dateLimit = $attributes.limit && moment.duration.apply(this, $attributes.limit.split(' ').map(function (elem, index) {
                     return index === 0 && parseInt(elem, 10) || elem;
                 }));
@@ -34,6 +36,12 @@
                     return [format(dates.startDate), format(dates.endDate)].join(options.separator);
                 }
 
+                var afterDateChoosen = function (start, end) {
+                    $scope.$apply(function () {
+                        ngModel.$setViewValue({startDate: start, endDate: end});
+                        ngModel.$render();
+                    });
+                }
                 var updateCalender = function (modelValue) {
                     if (!modelValue || (!modelValue.startDate)) {
                         ngModel.$setViewValue({startDate: moment().startOf('day'), endDate: moment().startOf('day')});
@@ -43,25 +51,21 @@
                     $element.data('daterangepicker').endDate = modelValue.endDate;
                     $element.data('daterangepicker').updateView();
                     $element.data('daterangepicker').updateCalendars();
+                    $element.data('daterangepicker').showCalendars();
                     $element.data('daterangepicker').updateInputText();
                     return modelValue;
+                };
+                ngModel.$render = function () {
+                    if (!ngModel.$viewValue || !ngModel.$viewValue.startDate) return;
+                    $element.val(formatted(ngModel.$viewValue));
                 };
 
                 ngModel.$formatters.unshift(updateCalender);
 
                 ngModel.$parsers.unshift(updateCalender)
 
-                ngModel.$render = function () {
-                    if (!ngModel.$viewValue || !ngModel.$viewValue.startDate) return;
-                    $element.val(formatted(ngModel.$viewValue));
-                };
+                $element.daterangepicker(options, afterDateChoosen);
 
-                $element.daterangepicker(options, function (start, end) {
-                    $scope.$apply(function () {
-                        ngModel.$setViewValue({startDate: start, endDate: end});
-                        ngModel.$render();
-                    });
-                });
             }
         };
     });
