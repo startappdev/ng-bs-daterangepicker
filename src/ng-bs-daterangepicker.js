@@ -37,7 +37,7 @@
                 var updateCalender = function (modelValue) {
                     if (!modelValue || (!modelValue.startDate)) {
                         ngModel.$setViewValue({startDate: moment().startOf('day'), endDate: moment().startOf('day')});
-                        return;
+                        return modelValue;
                     }
                     $element.data('daterangepicker').startDate = modelValue.startDate;
                     $element.data('daterangepicker').endDate = modelValue.endDate;
