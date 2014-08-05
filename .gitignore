@@ -1,2 +1,4 @@
 /node_modules
 /src/components
+.idea
+atlassian-ide-plugin.xml
