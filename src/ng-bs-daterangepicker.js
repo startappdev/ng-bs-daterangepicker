@@ -15,9 +15,10 @@
                 if (ngModel === null) return;
                 $element.css('position', 'relative');
                 var options = {};
+                options.invalidText = $attributes.invalidText;
                 options.format = $attributes.format || 'YYYY-MM-DD';
                 options.showDropdowns = $attributes.showDropdowns || false;
-                options.parentEl = $element[0].tagName + '[ng-model="' + $attributes.ngModel + '"]';
+                // options.parentEl = $element[0].tagName + '[ng-model="' + $attributes.ngModel + '"]';
                 options.separator = $attributes.separator || ' - ';
                 options.minDate = $attributes.minDate && moment(new Date($attributes.minDate));
                 options.maxDate = $attributes.maxDate && moment(new Date($attributes.maxDate));
@@ -55,6 +56,10 @@
                     $element.data('daterangepicker').updateInputText();
                     return modelValue;
                 };
+                $element.on('apply.daterangepicker', function (e,datepicker) {
+                    cl(datepicker);
+                    var html=$('<span class="help-block text-center alert-warning"></span>').text());
+                });
                 ngModel.$render = function () {
                     if (!ngModel.$viewValue || !ngModel.$viewValue.startDate) return;
                     $element.val(formatted(ngModel.$viewValue));
