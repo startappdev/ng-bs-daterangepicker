@@ -1,0 +1,23 @@
+{
+  "name": "ng-bs-daterangepicker-startapp",
+  "version": "0.0.4",
+  "main": "./src/ng-bs-daterangepicker.js",
+  "dependencies": {
+    "angular": ">= 1.0.7",
+    "bootstrap-daterangepicker": "*",
+    "bootstrap": "~3.0.0"
+  },
+  "devDependencies": {
+    "angular-mocks": ">= 1.0.7"
+  },
+  "homepage": "https://github.com/startappdev/ng-bs-daterangepicker",
+  "_release": "0.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.4",
+    "commit": "49f6b32cb2f72a61e0993b86f73d4f8f2f1a4aee"
+  },
+  "_source": "git://github.com/startappdev/ng-bs-daterangepicker.git",
+  "_target": "~0.0.4",
+  "_originalSource": "ng-bs-daterangepicker-startapp"
+}

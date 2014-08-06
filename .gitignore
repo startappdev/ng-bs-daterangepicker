@@ -1,4 +1,5 @@
 /node_modules
 /src/components
 .idea
+dist/
 atlassian-ide-plugin.xml
