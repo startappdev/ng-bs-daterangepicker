@@ -13,7 +13,7 @@
             require: '?ngModel',
             link: function ($scope, $element, $attributes, ngModel) {
                 if (ngModel === null) return;
-                var datepickerObj;
+                var datepickerObj = null;
                 $element.css('position', 'relative');
                 var options = {};
                 options.invalidText = $attributes.invalidText || 'date format is invalid';
@@ -21,8 +21,8 @@
                 options.showDropdowns = $attributes.showDropdowns || false;
                 // options.parentEl = $element[0].tagName + '[ng-model="' + $attributes.ngModel + '"]';
                 options.separator = $attributes.separator || ' - ';
-                options.minDate = $attributes.minDate && moment(new Date($attributes.minDate));
-                options.maxDate = $attributes.maxDate && moment(new Date($attributes.maxDate));
+                options.minDate = ($attributes.minDate) ? moment($parse($attributes.minDate)($scope), options.format) : null;
+                options.maxDate = ($attributes.maxDate) ? moment($parse($attributes.maxDate)($scope), options.format) : null;
                 options.dateLimit = $attributes.limit && moment.duration.apply(this, $attributes.limit.split(' ').map(function (elem, index) {
                     return index === 0 && parseInt(elem, 10) || elem;
                 }));
@@ -39,7 +39,8 @@
                 }
 
                 var dateValid = function (dateObj) {
-                    if (!(dateObj.startDate.isValid() && dateObj.endDate.isValid() && dateObj.startDate.isBefore(dateObj.endDate))) {
+                    if (!(dateObj.startDate.isValid() && dateObj.endDate.isValid() &&
+                        (dateObj.startDate.isBefore(dateObj.endDate) || dateObj.startDate.isSame(dateObj.endDate, 'day')))) {
                         return false;
                     }
                     if (options.minDate && options.minDate.isValid()) {
@@ -55,49 +56,44 @@
                     return true;
                 };
 
-                var buildValidation = function(){
+                var buildValidation = function () {
                     var html = $('<span class="help-block text-center alert-warning"></span>').text(options.invalidText);
 
                 };
 
                 var afterDateChoosen = function (start, end) {
                     $scope.$apply(function () {
-                        if (dateValid({startDate: start, endDate: end})) {
-                            ngModel.$setViewValue({startDate: start, endDate: end});
-                            ngModel.$render();
-                        }
-                        else {
-                            buildValidation();
-                        }
+                        //if (dateValid({startDate: start, endDate: end})) {
+                        ngModel.$setViewValue({startDate: start, endDate: end});
+                        ngModel.$render();
+                        //  }
+                        //else {
+                        //       buildValidation();
+                        //   }
                     });
                 };
                 // invoke the jquery plugin and supply the callback, cache the controller object
-                datepickerObj = $element.daterangepicker(options, afterDateChoosen);
+                datepickerObj = $element.daterangepicker(options, afterDateChoosen).data('daterangepicker');
 
 
                 var updateCalender = function (modelValue) {
                     if (!modelValue || (!modelValue.startDate)) {
                         ngModel.$setViewValue({
-                            startDate: moment().startOf('day'),
-                            endDate: moment().startOf('day')
+                            startDate: options.minDate || moment().startOf('day'),
+                            endDate: options.maxDate || moment().startOf('day')
                         });
                     }
-                    else if (dateValid(modelValue)) {
-                        datepickerObj.startDate = modelValue.startDate;
-                        datepickerObj.endDate = modelValue.endDate;
-                        datepickerObj.updateView();
-                        datepickerObj.updateCalendars();
-                        datepickerObj.showCalendars();
-                        datepickerObj.updateInputText();
-                    } else {
-                            buildValidation();
-                    }
+                    datepickerObj.startDate = modelValue.startDate;
+                    datepickerObj.endDate = modelValue.endDate;
+                    datepickerObj.updateView();
+                    datepickerObj.updateCalendars();
+                    datepickerObj.updateInputText();
                     return modelValue;
                 };
-//                $element.on('apply.daterangepicker', function (e, datepicker) {
-//                    cl(datepicker);
-//
-//                });
+
+                $element.click(function () {
+                    datepickerObj.showCalendars();
+                });
                 ngModel.$render = function () {
                     if (!ngModel.$viewValue || !ngModel.$viewValue.startDate) return;
                     if ($element[0].tagName == 'input')
