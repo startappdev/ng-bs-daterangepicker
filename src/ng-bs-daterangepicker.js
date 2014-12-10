@@ -83,8 +83,8 @@
                             endDate: options.maxDate || moment().startOf('day')
                         });
                     }
-                    datepickerObj.startDate = modelValue.startDate;
-                    datepickerObj.endDate = modelValue.endDate;
+                    datepickerObj.setStartDate(modelValue.startDate);
+                    datepickerObj.setEndDate(modelValue.endDate);
                     datepickerObj.updateView();
                     datepickerObj.updateCalendars();
                     datepickerObj.updateInputText();
