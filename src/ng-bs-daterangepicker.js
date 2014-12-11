@@ -101,7 +101,8 @@
                 };
 
                 ngModel.$formatters.unshift(updateCalender);
-
+                ngModel.$parsers.unshift(updateCalender);
+                
                 if ($element[0].tagName == 'input') {
                     ngModel.$parsers.unshift(updateCalender);
 
