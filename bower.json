@@ -4,7 +4,7 @@
   "main": "./src/ng-bs-daterangepicker.js",
   "dependencies": {
     "angular": ">= 1.0.7",
-    "bootstrap-daterangepicker-startapp": ">= 1.3.14",
+    "bootstrap-daterangepicker-startapp": "https://github.com/startappdev/bootstrap-daterangepicker-startapp.git",
     "bootstrap": "~3.0.0"
   },
   "devDependencies": {
