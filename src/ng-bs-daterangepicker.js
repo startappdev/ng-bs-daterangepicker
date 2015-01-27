@@ -19,10 +19,10 @@
                 options.invalidText = $attributes.invalidText || 'date format is invalid';
                 options.format = $attributes.format || 'YYYY-MM-DD';
                 options.showDropdowns = $attributes.showDropdowns || false;
-                // options.parentEl = $element[0].tagName + '[ng-model="' + $attributes.ngModel + '"]';
+                options.parentEl = $attributes.parentEl || 'body';
                 options.separator = $attributes.separator || ' - ';
-                options.minDate = ($attributes.minDate) ? moment($parse($attributes.minDate)($scope), options.format) : null;
-                options.maxDate = ($attributes.maxDate) ? moment($parse($attributes.maxDate)($scope), options.format) : null;
+                options.minDate = ($attributes.minDate) ? moment($parse($attributes.minDate)($scope), options.format) : undefined;
+                options.maxDate = ($attributes.maxDate) ? moment($parse($attributes.maxDate)($scope), options.format) : undefined;
                 options.dateLimit = $attributes.limit && moment.duration.apply(this, $attributes.limit.split(' ').map(function (elem, index) {
                     return index === 0 && parseInt(elem, 10) || elem;
                 }));
