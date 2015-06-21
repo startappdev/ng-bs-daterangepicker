@@ -75,6 +75,12 @@
                 // invoke the jquery plugin and supply the callback, cache the controller object
                 datepickerObj = $element.daterangepicker(options, afterDateChoosen).data('daterangepicker');
 
+                $scope.$on('ng.bs.daterangepicker.updateModel', function(e,edata){
+                    if (!(edata && edata.startDate && edata.endDate)){
+                        edata =ngModel.$modelValue;
+                    }
+                    updateCalender(edata);
+                });
 
                 var updateCalender = function (modelValue) {
                     if (!modelValue || (!modelValue.startDate)) {
