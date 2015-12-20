@@ -7,7 +7,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('ngDateRange', []).directive('ngDateRange', function ($compile, $parse) {
+    angular.module('ngDateRange', []).directive('ngDateRange',["$compile", "$parse",function ($compile, $parse) {
         return {
             restrict: 'EA',
             require: '?ngModel',
@@ -115,6 +115,6 @@
                 }
             }
         };
-    });
+    }]);
 
 })(angular);
