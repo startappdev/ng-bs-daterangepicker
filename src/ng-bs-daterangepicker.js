@@ -7,7 +7,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('ngDateRange', []).directive('ngDateRange',["$compile", "$parse",function ($compile, $parse) {
+    angular.module('ngDateRange', []).directive('ngDateRange',["$compile", "$parse", "$translate",function ($compile, $parse, $translate) {
         return {
             restrict: 'EA',
             require: '?ngModel',
@@ -29,6 +29,23 @@
                 options.ranges = $attributes.ranges && $parse($attributes.ranges)($scope);
                 options.locale = $attributes.locale && $parse($attributes.locale)($scope);
                 options.opens = $attributes.opens && $parse($attributes.opens)($scope);
+
+                function translateRangeText(rangeName) {
+                    let range = rangeName.replace(/ /g, '_');
+                    let units = range.match(/[0-9]+/) || {};
+                    if (typeof units.length !== 'undefined') {
+                        units = {units: units[0]};
+                        range = range.replace(/[0-9]+/, '');
+                    }
+
+                    return $translate.instant('REPORTS.FILTER.' + range.toUpperCase(), units);
+                }
+
+                options.ranges = Object.keys(options.ranges).reduce((acc, key) => {
+                    const translation = translateRangeText(key);
+                    acc[translation] = options.ranges[key];
+                    return acc;
+                }, {}); 
 
                 function format(date) {
                     return date.format(options.format);
