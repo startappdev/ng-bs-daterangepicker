@@ -41,7 +41,7 @@
                     return $translate.instant('REPORTS.FILTER.' + range.toUpperCase(), units);
                 }
 
-                options.ranges = Object.keys(options.ranges).reduce((acc, key) => {
+                options.ranges = Object.keys(options.ranges).reduce(function(acc, key) {
                     const translation = translateRangeText(key);
                     acc[translation] = options.ranges[key];
                     return acc;
