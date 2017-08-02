@@ -42,7 +42,7 @@
                 }
 
                 options.ranges = Object.keys(options.ranges).reduce(function(acc, key) {
-                    const translation = translateRangeText(key);
+                    var translation = translateRangeText(key);
                     acc[translation] = options.ranges[key];
                     return acc;
                 }, {}); 
