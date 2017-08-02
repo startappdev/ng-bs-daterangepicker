@@ -31,8 +31,8 @@
                 options.opens = $attributes.opens && $parse($attributes.opens)($scope);
 
                 function translateRangeText(rangeName) {
-                    let range = rangeName.replace(/ /g, '_');
-                    let units = range.match(/[0-9]+/) || {};
+                    var range = rangeName.replace(/ /g, '_');
+                    var units = range.match(/[0-9]+/) || {};
                     if (typeof units.length !== 'undefined') {
                         units = {units: units[0]};
                         range = range.replace(/[0-9]+/, '');
@@ -41,7 +41,7 @@
                     return $translate.instant('REPORTS.FILTER.' + range.toUpperCase(), units);
                 }
 
-                options.ranges = Object.keys(options.ranges).reduce((acc, key) => {
+                options.ranges = Object.keys(options.ranges).reduce(function(acc, key) {
                     const translation = translateRangeText(key);
                     acc[translation] = options.ranges[key];
                     return acc;
