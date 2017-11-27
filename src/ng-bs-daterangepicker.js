@@ -29,6 +29,7 @@
                 options.ranges = $attributes.ranges && $parse($attributes.ranges)($scope);
                 options.locale = $attributes.locale && $parse($attributes.locale)($scope);
                 options.opens = $attributes.opens && $parse($attributes.opens)($scope);
+                options.showCustomRangeLabel = $attributes.showCustomRangeLabel && $parse($attributes.showCustomRangeLabel)($scope);
 
                 function translateRangeText(rangeName) {
                     var range = rangeName.replace(/ /g, '_');
