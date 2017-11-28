@@ -30,6 +30,7 @@
                 options.locale = $attributes.locale && $parse($attributes.locale)($scope);
                 options.opens = $attributes.opens && $parse($attributes.opens)($scope);
                 options.showCustomRangeLabel = $attributes.showCustomRangeLabel && $parse($attributes.showCustomRangeLabel)($scope);
+                options.onApply = $attributes.onApply && $parse($attributes.onApply)($scope);
 
                 function translateRangeText(rangeName) {
                     var range = rangeName.replace(/ /g, '_');
@@ -79,10 +80,16 @@
 
                 };
 
-                var afterDateChoosen = function (start, end) {
+                var afterDateChoosen = function (start, end, label) {
+                    const labelText = $(label).text();
+
+                    if (options.onApply) {
+                        options.onApply({startDate: start, endDate: end, label: labelText});
+                    }
+
                     $scope.$apply(function () {
                         //if (dateValid({startDate: start, endDate: end})) {
-                        ngModel.$setViewValue({startDate: start, endDate: end});
+                        ngModel.$setViewValue({startDate: start, endDate: end, label: labelText});
                         ngModel.$render();
                         //  }
                         //else {
