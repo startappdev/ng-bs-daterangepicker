@@ -1,9 +1,10 @@
 {
   "name": "ng-bs-daterangepicker-startapp",
   "description": "AngularJS directive for bootstrap-daterangepicker",
-  "version": "0.0.21",
+  "version": "0.0.23",
   "filename": "./src/ng-bs-daterangepicker.js",
   "homepage": "http://github.com/startappadev/ng-bs-daterangepicker",
+  "main": "src/ng-bs-daterangepicker.js",
   "author": {
     "name": "Luis Farzati",
     "email": "lfarzati@gmail.com",
@@ -27,11 +28,13 @@
     "url": "http://github.com/luisfarzati/ng-bs-daterangepicker/issues"
   },
   "dependencies": {
+    "jquery": "^3.2.1",
+    "moment": "^2.19.3"
   },
   "devDependencies": {
     "grunt": "latest",
-    "grunt-karma": "latest",
     "grunt-contrib-jshint": "latest",
-   "grunt-contrib-uglify": "latest"
+    "grunt-contrib-uglify": "latest",
+    "grunt-karma": "latest"
   }
 }

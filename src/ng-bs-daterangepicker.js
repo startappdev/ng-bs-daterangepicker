@@ -31,6 +31,7 @@
                 options.opens = $attributes.opens && $parse($attributes.opens)($scope);
                 options.showCustomRangeLabel = $attributes.showCustomRangeLabel && $parse($attributes.showCustomRangeLabel)($scope);
                 options.onApply = $attributes.onApply && $parse($attributes.onApply)($scope);
+                options.disableCalendarInput = $attributes.disableCalendarInput && $parse($attributes.disableCalendarInput)($scope);
 
                 function translateRangeText(rangeName) {
                     var range = rangeName.replace(/ /g, '_');
@@ -81,20 +82,15 @@
                 };
 
                 var afterDateChoosen = function (start, end, label) {
-                    const labelText = $(label).text();
+                    var labelText = $(label).text();
 
                     if (options.onApply) {
                         options.onApply({startDate: start, endDate: end, label: labelText});
                     }
 
                     $scope.$apply(function () {
-                        //if (dateValid({startDate: start, endDate: end})) {
                         ngModel.$setViewValue({startDate: start, endDate: end, label: labelText});
                         ngModel.$render();
-                        //  }
-                        //else {
-                        //       buildValidation();
-                        //   }
                     });
                 };
                 // invoke the jquery plugin and supply the callback, cache the controller object
