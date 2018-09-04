@@ -3,7 +3,7 @@
   "description": "AngularJS directive for bootstrap-daterangepicker",
   "version": "0.0.23",
   "filename": "./src/ng-bs-daterangepicker.js",
-  "homepage": "http://github.com/startappadev/ng-bs-daterangepicker",
+  "homepage": "http://github.com/startappdev/ng-bs-daterangepicker",
   "main": "src/ng-bs-daterangepicker.js",
   "author": {
     "name": "Luis Farzati",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/startappadev/ng-bs-daterangepicker.git"
+    "url": "git://github.com/startappdev/ng-bs-daterangepicker.git"
   },
   "keywords": [
     "angular",
