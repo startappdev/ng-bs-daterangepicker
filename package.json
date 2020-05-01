@@ -28,7 +28,7 @@
     "url": "http://github.com/luisfarzati/ng-bs-daterangepicker/issues"
   },
   "dependencies": {
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "moment": "^2.19.3"
   },
   "devDependencies": {
